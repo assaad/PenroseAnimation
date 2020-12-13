@@ -12,7 +12,7 @@ public class Point {
     public Point(int x, int y) {
         this.x = x;
         this.y = y;
-        this.connectedTo = new ArrayList<>();
+        this.connectedTo = new ArrayList<Line>();
     }
 
     private static void addPoint(Point a, Point b, Color c) {
@@ -48,7 +48,7 @@ public class Point {
     }
 
     public Line randomWalk(Point from, Random random) {
-        ArrayList<Line> temp = new ArrayList<>();
+        ArrayList<Line> temp = new ArrayList<Line>();
         Line self = null;
         for (int i = 0; i < connectedTo.size(); i++) {
             if (connectedTo.get(i).to != from) {

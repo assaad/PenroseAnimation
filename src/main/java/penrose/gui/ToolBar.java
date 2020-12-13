@@ -201,7 +201,7 @@ public class ToolBar implements ActionListener {
     }
 
     private void newFile() {
-        JFrame newFileFrame = new JFrame();
+        final JFrame newFileFrame = new JFrame();
         newFileFrame.setTitle("New");
         newFileFrame.setBackground(Color.GRAY);
         newFileFrame.setSize(400, 200);
@@ -216,7 +216,7 @@ public class ToolBar implements ActionListener {
 
         newFileFrame.setVisible(true);
 
-        JTextField width = new JTextField();
+        final JTextField width = new JTextField();
         width.setSize(100, 25);
         width.setLocation(100, 25);
 
@@ -228,7 +228,7 @@ public class ToolBar implements ActionListener {
         heightLabel.setSize(75, 25);
         heightLabel.setLocation(25, 75);
 
-        JTextField height = new JTextField();
+        final JTextField height = new JTextField();
         height.setLocation(100, 75);
         height.setSize(100, 25);
 

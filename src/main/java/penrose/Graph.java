@@ -15,11 +15,11 @@ public class Graph {
     int xMax;
     int yMax;
 
-    HashMap<Integer, Integer> counters = new HashMap<>();
+    HashMap<Integer, Integer> counters = new HashMap<Integer, Integer>();
 
     public Graph() {
-        this.points = new HashMap<>();
-        this.listOfPoints = new ArrayList<>();
+        this.points = new HashMap<Long, Point>();
+        this.listOfPoints = new ArrayList<Point>();
         this.xMax = 0;
         this.yMax = 0;
     }
@@ -161,7 +161,12 @@ public class Graph {
             }
         }
 
-        counters.merge(dist, 1, Integer::sum);
+        Integer c = counters.get(dist);
+        if (c == null) {
+            counters.put(dist, 1);
+        } else {
+            counters.put(dist, 1 + c);
+        }
 
         if (dist < 30) {
             return pFinal;

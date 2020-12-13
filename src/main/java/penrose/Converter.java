@@ -20,8 +20,8 @@ public class Converter {
         double diffY = 0;
         double ratio = 0;
         boolean nextToParse = false;
-        ArrayList<double[]> res = new ArrayList<>();
-        ArrayList<String> strokes = new ArrayList<>();
+        ArrayList<double[]> res = new ArrayList<double[]>();
+        ArrayList<String> strokes = new ArrayList<String>();
         try {
             br = new BufferedReader(new FileReader(svg));
             while ((line = br.readLine()) != null) {
@@ -124,8 +124,8 @@ public class Converter {
         double diffY = 0;
         double ratio = 0;
         boolean nextToParse = false;
-        ArrayList<double[]> res = new ArrayList<>();
-        ArrayList<String> strokes = new ArrayList<>();
+        ArrayList<double[]> res = new ArrayList<double[]>();
+        ArrayList<String> strokes = new ArrayList<String>();
         try {
             PrintWriter pw = new PrintWriter(new FileWriter(csv));
             br = new BufferedReader(new FileReader(svg));
