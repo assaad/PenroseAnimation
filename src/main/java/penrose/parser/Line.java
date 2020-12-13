@@ -1,6 +1,7 @@
 package penrose.parser;
 
 public class Line extends Shape {
+    public static String header = "Type,x1,y1,x2,y2,stroke,stroke-width";
     public double x1;
     public double y1;
     public double x2;
@@ -20,7 +21,7 @@ public class Line extends Shape {
 
     @Override
     public String toCsv() {
-        return null;
+        return "Line," + this.x1 + "," + this.y1 + "," + this.x2+ "," + this.y2 + "," + this.stroke+ "," + this.srokeWidth;
     }
 
     @Override

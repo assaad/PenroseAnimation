@@ -184,6 +184,49 @@ public class SVGParser {
         return svg;
     }
 
+    public static void exportCSV(SVG svg, String path) {
+        try {
+            PrintWriter pw = new PrintWriter(new FileWriter(path));
+            pw.println("width, height");
+            pw.println(svg.width+","+svg.height);
+            pw.println("");
+
+            pw.println("viewbox x1, viewbox y1, viewbox x2, viewbox y2");
+            pw.println(svg.viewBox.x1+","+svg.viewBox.y1+","+svg.viewBox.x2+","+svg.viewBox.y2);
+            pw.println("");
+
+
+            pw.println(Circle.header);
+            for (int i = 0; i < svg.circles.size(); i++) {
+                pw.println(svg.circles.get(i).toCsv());
+            }
+            pw.println("");
+
+            pw.println(Line.header);
+            for (int i = 0; i < svg.lines.size(); i++) {
+                pw.println(svg.lines.get(i).toCsv());
+            }
+            pw.println("");
+
+            pw.println(Arc.header);
+            for (int i = 0; i < svg.arcs.size(); i++) {
+                pw.println(svg.arcs.get(i).toCsv());
+            }
+            pw.println("");
+
+            pw.println(Polyline.header);
+            for (int i = 0; i < svg.poly.size(); i++) {
+                pw.println(svg.poly.get(i).toCsv());
+            }
+            pw.println("");
+
+            pw.close();
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
     public static void export(SVG svg, String path, boolean sorted) {
         try {
             PrintWriter pw = new PrintWriter(new FileWriter(path));
@@ -226,8 +269,6 @@ public class SVGParser {
             pw.println("    </g>\n" +
                     "</svg>");
             pw.close();
-            int x = 0;
-
         } catch (Exception ex) {
             ex.printStackTrace();
         }
