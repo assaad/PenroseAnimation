@@ -2,6 +2,8 @@ package penrose.parser;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.PrintWriter;
 
 public class SVGParser {
     private static int CIRCLE = 0;
@@ -17,7 +19,6 @@ public class SVGParser {
 
     public static SVG parse(String path) {
         SVG svg = new SVG();
-
 
         try {
             BufferedReader br = new BufferedReader(new FileReader(path));
@@ -177,7 +178,6 @@ public class SVGParser {
                             nextElement = -1;
                         }
                     }
-                    int x = 0;
                 }
                 count++;
             }
@@ -185,7 +185,56 @@ public class SVGParser {
             ex.printStackTrace();
         }
 
-        System.out.println("Found " + svg.shapeSize() + " shapes: (" + svg.circles + " circles, " + svg.lines + " lines, " + svg.poly + " poly, " + svg.arcs + " arcs)");
+        System.out.println("Found " + svg.shapeSize() + " shapes: (" + svg.circles.size() + " circles, " + svg.lines.size() + " lines, " + svg.poly.size() + " poly, " + svg.arcs.size() + " arcs)");
         return svg;
+    }
+
+    public static void export(SVG svg, String path, boolean sorted) {
+        try {
+            PrintWriter pw = new PrintWriter(new FileWriter(path));
+            pw.println(svg.header);
+            pw.println(svg.headerComment);
+
+            String s = svg.viewBoxString;
+
+//            line = line.replace(vb, "VIEWBOX");
+//            line = line.replace(svgWidth, "SVG_WIDTH");
+//            line = line.replace(svgHeight, "SVG_HEIGHT");
+
+            s = s.replace("VIEWBOX", svg.viewBox.x1 + "," + svg.viewBox.y1 + "," + svg.viewBox.x2 + "," + svg.viewBox.y2);
+            s = s.replace("SVG_WIDTH", svg.width + "");
+            s = s.replace("SVG_HEIGHT", svg.height + "");
+            pw.println(s);
+            pw.println(svg.transform);
+
+            if (sorted) {
+                for (int i = 0; i < svg.circles.size(); i++) {
+                    pw.println(svg.circles.get(i).toSvg());
+                }
+                for (int i = 0; i < svg.lines.size(); i++) {
+                    pw.println(svg.lines.get(i).toSvg());
+                }
+                for (int i = 0; i < svg.arcs.size(); i++) {
+                    pw.println(svg.arcs.get(i).toSvg());
+                }
+                for (int i = 0; i < svg.poly.size(); i++) {
+                    pw.println(svg.poly.get(i).toSvg());
+                }
+            } else {
+                for (int i = 0; i < svg.shapes.size(); i++) {
+                    pw.println(svg.shapes.get(i).toSvg());
+                }
+            }
+
+
+            //at the end
+            pw.println("    </g>\n" +
+                    "</svg>");
+            pw.close();
+            int x = 0;
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 }

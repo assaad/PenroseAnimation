@@ -11,28 +11,29 @@ public class SVG {
     public String viewBoxString;
     public String transform;
 
-    public int circles = 0;
-    public int lines = 0;
-    public int poly = 0;
-    public int arcs = 0;
+
+    public ArrayList<Circle> circles = new ArrayList<Circle>();
+    public ArrayList<Line> lines = new ArrayList<Line>();
+    public ArrayList<Polyline> poly = new ArrayList<Polyline>();
+    public ArrayList<Arc> arcs = new ArrayList<Arc>();
 
 
-    private ArrayList<Shape> shapes = new ArrayList<Shape>();
+    public ArrayList<Shape> shapes = new ArrayList<Shape>();
 
     public void addShape(Shape shape) {
         shapes.add(shape);
         if (shape instanceof Circle) {
-            circles++;
+            circles.add((Circle) shape);
         } else if (shape instanceof Line) {
-            lines++;
+            lines.add((Line) shape);
         } else if (shape instanceof Arc) {
-            arcs++;
+            arcs.add((Arc) shape);
         } else if (shape instanceof Polyline) {
-            poly++;
+            poly.add((Polyline) shape);
         }
     }
 
-    public int shapeSize(){
+    public int shapeSize() {
         return shapes.size();
     }
 

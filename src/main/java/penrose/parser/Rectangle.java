@@ -13,5 +13,16 @@ public class Rectangle extends Shape {
         this.y2 = y2;
     }
 
+    @Override
+    public String toCsv() {
+        return null;
+    }
+
+    @Override
+    public String toSvg() {
+        String line = "        <!-- Rectangle -->\n";
+        return line;
+    }
+
 
 }

@@ -11,4 +11,15 @@ public class Point extends Shape {
         this.x = x;
         this.y = y;
     }
+
+    @Override
+    public String toCsv() {
+        return null;
+    }
+
+    @Override
+    public String toSvg() {
+        String line = "        <!-- Point -->\n";
+        return line;
+    }
 }
