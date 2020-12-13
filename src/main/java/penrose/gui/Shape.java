@@ -1,8 +1,6 @@
-package penrose.paint;
+package penrose.gui;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Font;
+import java.awt.*;
 
 public class Shape {
 
@@ -24,7 +22,7 @@ public class Shape {
 	public int group = 0;
 	
 	
-	public Shape(int x1, int y1,int x2, int y2, Color color,BasicStroke stroke, int shape,Color fill,boolean transparent){
+	public Shape(int x1, int y1, int x2, int y2, Color color, BasicStroke stroke, int shape, Color fill, boolean transparent){
 		this.x1 = x1;
 		this.x2 = x2;
 		this.y1 = y1;
@@ -50,7 +48,7 @@ public class Shape {
 		this.message = message;
 	}
 	
-	public Shape(int x1, int y1,int x2, int y2, Color color,BasicStroke stroke, int shape,int group){
+	public Shape(int x1, int y1, int x2, int y2, Color color, BasicStroke stroke, int shape, int group){
 		this.x1 = x1;
 		this.x2 = x2;
 		this.y1 = y1;

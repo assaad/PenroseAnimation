@@ -32,6 +32,8 @@ public class ToolBar implements ActionListener {
     private JButton circle;
     private JButton erase;
     private JButton fill;
+    private JButton undo;
+    private JButton redo;
 
     private JComboBox comboBox;
 
@@ -86,6 +88,8 @@ public class ToolBar implements ActionListener {
         circle = new JButton("Circle", new ImageIcon(ClassLoader.getSystemResource("icons/Circled.png")));
         erase = new JButton("Erase", new ImageIcon(ClassLoader.getSystemResource("icons/Eraser-24.png")));
         fill = new JButton("Fill", new ImageIcon(ClassLoader.getSystemResource("icons/Fill Color-24.png")));
+        undo = new JButton("Undo", new ImageIcon(ClassLoader.getSystemResource("icons/Undo-24.png")));
+        redo = new JButton("Redo", new ImageIcon(ClassLoader.getSystemResource("icons/Redo-24.png")));
 
         String[] items = {"Line Width", "1", "2", "3", "4", "5", "6", "7", "8"};
 
@@ -108,6 +112,9 @@ public class ToolBar implements ActionListener {
         toolBar.add(erase);
         toolBar.add(fill);
         toolBar.add(comboBox);
+        toolBar.addSeparator();
+        toolBar.add(undo);
+        toolBar.add(redo);
     }
 
     public void actionPerformed(ActionEvent ae) {
@@ -146,6 +153,10 @@ public class ToolBar implements ActionListener {
                 JOptionPane.showMessageDialog(new JFrame(), "Please open an svg first", "Dialog",
                         JOptionPane.ERROR_MESSAGE);
             }
+        } else if (source == undo) {
+            frame.getInkPanel().undo();
+        } else if (source == redo) {
+            frame.getInkPanel().redo();
         } else if (source == pencil) {
             frame.getInkPanel().setTool(0);
         } else if (source == line) {
