@@ -1,4 +1,7 @@
-package penrose;
+import penrose.Converter;
+import penrose.Graph;
+import penrose.Line;
+import penrose.Point;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -17,11 +20,11 @@ public class AnimationStarter extends JPanel {
     private long elapsedTimeMillis;  // The time, in milliseconds, since the animation started.
     private Graph graph;
     private Random random;
-    private Point previous;
-    private Point current;
-    private Point next;
-    private Point previousPixel;
-    private Point pixel;
+    private penrose.Point previous;
+    private penrose.Point current;
+    private penrose.Point next;
+    private penrose.Point previousPixel;
+    private penrose.Point pixel;
     private Color stroke;
     private BufferedImage image;
     private float pixelSize;  // This is the measure of a pixel in the coordinate system

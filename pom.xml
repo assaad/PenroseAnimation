@@ -20,7 +20,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>penrose.AnimationStarter</mainClass>
+                            <mainClass>AnimationStarter</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>

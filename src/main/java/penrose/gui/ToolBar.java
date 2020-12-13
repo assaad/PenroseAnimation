@@ -11,47 +11,37 @@ import java.io.File;
 import java.io.IOException;
 
 public class ToolBar implements ActionListener {
-    private JToolBar toolBar;
-    private JButton pencil;
-    private JButton line;
-    private JButton rectangle;
-    private JButton circle;
-    private JButton text;
-    private JButton erase;
-    private JButton fill;
-    private JButton undo;
-    private JButton redo;
-    private JButton clear;
-    private Dimension newDimensions = new Dimension(700, 500);
-    private JButton save;
     private JButton open;
-    private JButton newFile;
+    private JButton save;
+
+    private JButton start;
+    private JButton stop;
+
+    private JButton clear;
     private JFileChooser fc;
-    private JComboBox comboBox;
+    private JFileChooser fsave;
+    private JToolBar toolBar;
+
+    private Dimension newDimensions = new Dimension(700, 500);
+
+
     private File f;
-    private DrawFrame frame;
+    private PenroseFrame frame;
 
-    TextDialog td;
-
-    public ToolBar(DrawFrame frame) {
+    public ToolBar(PenroseFrame frame) {
         this.frame = frame;
         fc = new JFileChooser(new File("."));
-        fc.setFileFilter(new FileNameExtensionFilter("Image Files", "jpg", "png"));
+        fc.setFileFilter(new FileNameExtensionFilter("Svg Files", "svg"));
+
+        fsave = new JFileChooser(new File("."));
+        fsave.setFileFilter(new FileNameExtensionFilter("Image Files", "png", "jpg"));
         this.initializeToolBar();
-        td = new TextDialog(frame);
-        clear.addActionListener(this);
-        rectangle.addActionListener(this);
-        line.addActionListener(this);
-        circle.addActionListener(this);
-        erase.addActionListener(this);
-        pencil.addActionListener(this);
-        comboBox.addActionListener(this);
-        undo.addActionListener(this);
-        redo.addActionListener(this);
-        text.addActionListener(this);
-        save.addActionListener(this);
         open.addActionListener(this);
-        newFile.addActionListener(this);
+        save.addActionListener(this);
+
+        start.addActionListener(this);
+        stop.addActionListener(this);
+        clear.addActionListener(this);
     }
 
     private void initializeToolBar() {
@@ -64,45 +54,24 @@ public class ToolBar implements ActionListener {
         toolBar.setLayout(new GridLayout(18, 0));
 
         //toolBar.setBackground( new Color(0, 153, 204));
+        //ImageIO.read( ClassLoader.getSystemResource( "image/button1.png" ) )
+        open = new JButton("Open", new ImageIcon(ClassLoader.getSystemResource("icons/Add Folder-24.png")));
+        save = new JButton("Save", new ImageIcon(ClassLoader.getSystemResource("icons/Save-24.png")));
+        start = new JButton("Start", new ImageIcon(ClassLoader.getSystemResource("icons/Triangle-24.png")));
+        stop = new JButton("Stop", new ImageIcon(ClassLoader.getSystemResource("icons/Octagon-24.png")));
 
-        save = new JButton("Save");//,new ImageIcon(this.getClass().getResource("icons/Save-24.png")));
-        open = new JButton("Open");//,new ImageIcon(this.getClass().getResource("icons/Add Folder-24.png")));
-        newFile = new JButton("New");//,new ImageIcon(this.getClass().getResource("icons/Create New-24.png")));
-        pencil = new JButton("Pencil");//,new ImageIcon(this.getClass().getResource("icons/Pencil-24.png")));
-        line = new JButton("Line");//, new ImageIcon(this.getClass().getResource("icons/Line-24.png")));
-        rectangle = new JButton("Rectangle");//, new ImageIcon(this.getClass().getResource("icons/Rectangle-24.png")));
-        circle = new JButton("Circle");//, new ImageIcon(this.getClass().getResource("icons/Circled.png")));
-        text = new JButton("Text");//,new ImageIcon(this.getClass().getResource("icons/Type-24.png")));
-        erase = new JButton("Erase");//, new ImageIcon(this.getClass().getResource("icons/Eraser-24.png")));
-        undo = new JButton("Undo");//, new ImageIcon(this.getClass().getResource("icons/Undo-24.png")));
-        redo = new JButton("Redo");//, new ImageIcon(this.getClass().getResource("icons/Redo-24.png")));
-        clear = new JButton("Clear");//,new ImageIcon(this.getClass().getResource("icons/Trash-24.png")));
-
-        String[] items = {"Line Width", "1", "2", "3", "4", "5", "6", "7", "8"};
-
-        comboBox = new JComboBox(items);
-        comboBox.setMaximumSize(new Dimension(100, 25));
+        clear = new JButton("Clear", new ImageIcon(ClassLoader.getSystemResource("icons/Trash-24.png")));
 
         // ----------------
         // add buttons to the tool bar
         // ----------------
-        toolBar.add(newFile);
         toolBar.add(open);
         toolBar.add(save);
         toolBar.addSeparator();
-        toolBar.add(pencil);
-        toolBar.add(line);
-        toolBar.add(rectangle);
-        toolBar.add(circle);
+        toolBar.add(start);
+        toolBar.add(stop);
         toolBar.addSeparator();
-        toolBar.add(text);
-        toolBar.add(erase);
         toolBar.add(clear);
-        toolBar.addSeparator();
-        toolBar.add(undo);
-        toolBar.add(redo);
-        toolBar.addSeparator();
-        toolBar.add(comboBox);
     }
 
     public void actionPerformed(ActionEvent ae) {
@@ -110,34 +79,6 @@ public class ToolBar implements ActionListener {
 
         if (source == clear) {
             frame.getInkPanel().clear();
-        } else if (source == pencil) {
-            frame.getInkPanel().setTool(0);
-        } else if (source == line) {
-            frame.getInkPanel().setTool(1);
-        } else if (source == rectangle) {
-            frame.getInkPanel().setTool(2);
-        } else if (source == circle) {
-            frame.getInkPanel().setTool(3);
-        } else if (source == text) {
-
-            frame.getInkPanel().setTool(5);
-
-        } else if (source == erase) {
-            frame.getInkPanel().setTool(6);
-        } else if (source == fill) {
-            frame.getInkPanel().setTool(7);
-        } else if (source == undo) {
-            frame.getInkPanel().undo();
-        } else if (source == redo) {
-            frame.getInkPanel().redo();
-        } else if (source == comboBox) {
-            try {
-                JComboBox combo = (JComboBox) ae.getSource();
-                String current = (String) combo.getSelectedItem();
-                frame.getInkPanel().setThickness(Float.valueOf(current));
-            } catch (NumberFormatException e) {
-
-            }
         } else if (source == open) {
             if (fc.showOpenDialog(frame) == JFileChooser.APPROVE_OPTION) {
                 f = fc.getSelectedFile();
@@ -145,21 +86,32 @@ public class ToolBar implements ActionListener {
             }
         } else if (source == save) {
             // open file saver
-            if (fc.showSaveDialog(frame) == JFileChooser.APPROVE_OPTION) {
-                f = new File(fc.getSelectedFile() + ".png");
+            if (fsave.showSaveDialog(frame) == JFileChooser.APPROVE_OPTION) {
+                f = new File(fsave.getSelectedFile() + ".png");
                 try {
                     saveFile(f);
                 } catch (IOException e1) {
-                    // TODO Auto-generated catch block
                     e1.printStackTrace();
                 }
             }
-        } else if (source == newFile) {
+        } else if (source == start) {
+            if (frame.penroseManager.isReady()) {
+                frame.penroseManager.start();
+            } else {
+                JOptionPane.showMessageDialog(new JFrame(), "Please open an svg first", "Dialog",
+                        JOptionPane.ERROR_MESSAGE);
+            }
 
-            newFile();
+        } else if (source == stop) {
+            if (frame.penroseManager.isReady()) {
+                frame.penroseManager.stop();
+            } else {
+                JOptionPane.showMessageDialog(new JFrame(), "Please open an svg first", "Dialog",
+                        JOptionPane.ERROR_MESSAGE);
+            }
         } else {
-            JButton b = (JButton) source;
-            frame.getInkPanel().setColor(b.getBackground());
+//            JButton b = (JButton) source;
+//            frame.getInkPanel().setColor(b.getBackground());
         }
     }
 
@@ -261,11 +213,8 @@ public class ToolBar implements ActionListener {
 
         //	Image image = Toolkit.getDefaultToolkit().getImage(f.getPath());
         try {
-            frame.getInkPanel().setImage(ImageIO.read(f));
-            newDimensions = new Dimension(ImageIO.read(f).getWidth(), ImageIO.read(f).getHeight());
-            setDimensions(newDimensions.width, newDimensions.height);
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
+            frame.penroseManager.setGraph(f.getAbsolutePath());
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
