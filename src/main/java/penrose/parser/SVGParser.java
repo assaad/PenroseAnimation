@@ -92,7 +92,6 @@ public class SVGParser {
 
                                     pos = line.indexOf(";stroke-width:");
                                     c.srokeWidth = line.substring(pos + 14, line.indexOf(";", pos + 1));
-                                    c.postText = line.substring(line.indexOf("\" style"));
                                     svg.addShape(c);
                                     break;
                                 }
@@ -115,7 +114,6 @@ public class SVGParser {
 
                                     pos = line.indexOf(";stroke-width:");
                                     l.srokeWidth = line.substring(pos + 14, line.indexOf(";", pos + 1));
-                                    l.postText = line.substring(line.indexOf("\" style"));
                                     svg.addShape(l);
                                     break;
                                 }
@@ -140,7 +138,6 @@ public class SVGParser {
 
                                     pos = line.indexOf(";stroke-width:");
                                     pl.srokeWidth = line.substring(pos + 14, line.indexOf(";", pos + 1));
-                                    pl.postText = line.substring(line.indexOf("\" style"));
                                     svg.addShape(pl);
                                     break;
                                 }
@@ -166,8 +163,6 @@ public class SVGParser {
 
                                     pos = line.indexOf(";stroke-width:");
                                     arc.srokeWidth = line.substring(pos + 14, line.indexOf(";", pos + 1));
-                                    arc.postText = line.substring(line.indexOf("\" style"));
-
                                     svg.addShape(arc);
                                     break;
                                 }

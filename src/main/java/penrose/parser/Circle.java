@@ -13,7 +13,7 @@ public class Circle extends Shape {
     @Override
     public String toSvg() {
         String line = "        <!-- Circle -->\n";
-        line += "        <circle cx=\"" + this.cx + "\" cy=\"" + this.cy + "\" r=\"" + this.r + this.postText;
+        line += "        <circle cx=\"" + this.cx + "\" cy=\"" + this.cy + "\" r=\"" + this.r + this.postProcess();
         return line;
     }
 }
