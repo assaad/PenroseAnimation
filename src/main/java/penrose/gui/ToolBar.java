@@ -21,12 +21,22 @@ public class ToolBar implements ActionListener {
     private JFileChooser fc;
     private JFileChooser fsave;
     private JToolBar toolBar;
-
     private Dimension newDimensions = new Dimension(700, 500);
-
-
     private File f;
     private PenroseFrame frame;
+
+
+    private JButton pencil;
+    private JButton line;
+    private JButton rectangle;
+    private JButton circle;
+    private JButton erase;
+    private JButton fill;
+
+    private JComboBox comboBox;
+
+
+    TextDialog td;
 
     public ToolBar(PenroseFrame frame) {
         this.frame = frame;
@@ -42,6 +52,14 @@ public class ToolBar implements ActionListener {
         start.addActionListener(this);
         stop.addActionListener(this);
         clear.addActionListener(this);
+
+
+        rectangle.addActionListener(this);
+        line.addActionListener(this);
+        circle.addActionListener(this);
+        erase.addActionListener(this);
+        pencil.addActionListener(this);
+        comboBox.addActionListener(this);
     }
 
     private void initializeToolBar() {
@@ -62,19 +80,38 @@ public class ToolBar implements ActionListener {
 
         clear = new JButton("Clear", new ImageIcon(ClassLoader.getSystemResource("icons/Trash-24.png")));
 
+        pencil = new JButton("Pencil", new ImageIcon(ClassLoader.getSystemResource("icons/Pencil-24.png")));
+        line = new JButton("Line", new ImageIcon(ClassLoader.getSystemResource("icons/Line-24.png")));
+        rectangle = new JButton("Rectangle", new ImageIcon(ClassLoader.getSystemResource("icons/Rectangle-24.png")));
+        circle = new JButton("Circle", new ImageIcon(ClassLoader.getSystemResource("icons/Circled.png")));
+        erase = new JButton("Erase", new ImageIcon(ClassLoader.getSystemResource("icons/Eraser-24.png")));
+        fill = new JButton("Fill", new ImageIcon(ClassLoader.getSystemResource("icons/Fill Color-24.png")));
+
+        String[] items = {"Line Width", "1", "2", "3", "4", "5", "6", "7", "8"};
+
+        comboBox = new JComboBox(items);
+        comboBox.setMaximumSize(new Dimension(100, 25));
         // ----------------
         // add buttons to the tool bar
         // ----------------
         toolBar.add(open);
+        toolBar.add(clear);
         toolBar.add(save);
         toolBar.addSeparator();
         toolBar.add(start);
         toolBar.add(stop);
         toolBar.addSeparator();
-        toolBar.add(clear);
+        toolBar.add(pencil);
+        toolBar.add(line);
+        toolBar.add(rectangle);
+        toolBar.add(circle);
+        toolBar.add(erase);
+        toolBar.add(fill);
+        toolBar.add(comboBox);
     }
 
     public void actionPerformed(ActionEvent ae) {
+
         Object source = ae.getSource();
 
         if (source == clear) {
@@ -109,9 +146,29 @@ public class ToolBar implements ActionListener {
                 JOptionPane.showMessageDialog(new JFrame(), "Please open an svg first", "Dialog",
                         JOptionPane.ERROR_MESSAGE);
             }
+        } else if (source == pencil) {
+            frame.getInkPanel().setTool(0);
+        } else if (source == line) {
+            frame.getInkPanel().setTool(1);
+        } else if (source == rectangle) {
+            frame.getInkPanel().setTool(2);
+        } else if (source == circle) {
+            frame.getInkPanel().setTool(3);
+        } else if (source == erase) {
+            frame.getInkPanel().setTool(6);
+        } else if (source == fill) {
+            frame.getInkPanel().setTool(7);
+        } else if (source == comboBox) {
+            try {
+                JComboBox combo = (JComboBox) ae.getSource();
+                String current = (String) combo.getSelectedItem();
+                frame.getInkPanel().setThickness(Float.valueOf(current));
+            } catch (NumberFormatException e) {
+
+            }
         } else {
-//            JButton b = (JButton) source;
-//            frame.getInkPanel().setColor(b.getBackground());
+            JButton b = (JButton) source;
+            frame.getInkPanel().setColor(b.getBackground());
         }
     }
 

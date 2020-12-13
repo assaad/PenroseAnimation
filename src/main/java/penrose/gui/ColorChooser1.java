@@ -1,14 +1,20 @@
 package penrose.gui;
 
-import javax.swing.*;
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+import javax.swing.JToolBar;
 
 public class ColorChooser1 extends JPanel implements ActionListener {
     private static final long serialVersionUID = -2358101254605896432L;
-    private final String PRIMARY_COLOR = "Primary Color";
-    private final String SECONDARY_COLOR = "Secondary Color";
     private JButton turquoise;
     private JButton emerald;
     private JButton peter_river;
@@ -34,6 +40,7 @@ public class ColorChooser1 extends JPanel implements ActionListener {
     private JButton custom3;
     private JButton newColor;
     private JButton secondaryColor;
+
     private Color turquoiseC = new Color(26, 188, 156);
     private Color emeraldC = new Color(46, 204, 113);
     private Color peter_riverC = new Color(52, 152, 219);
@@ -54,12 +61,18 @@ public class ColorChooser1 extends JPanel implements ActionListener {
     private Color pomegranateC = new Color(192, 57, 43);
     private Color silverC = new Color(189, 195, 199);
     private Color asbestosC = new Color(127, 140, 141);
+
     private JToolBar cc;
+
     private PenroseFrame frame;
 
-//	ColorDialog cd;
     private JComboBox<String> option;
     private JRadioButton fill;
+
+    ColorDialog cd;
+
+    private final String PRIMARY_COLOR = "Primary Color";
+    private final String SECONDARY_COLOR = "Secondary Color";
 
     public ColorChooser1(PenroseFrame frame) {
         cc = new JToolBar(JToolBar.HORIZONTAL);
@@ -70,7 +83,7 @@ public class ColorChooser1 extends JPanel implements ActionListener {
         this.frame = frame;
         this.initializeColorChooser(cc);
 
-//		cd = new ColorDialog(frame, primaryColor.getBackground());
+        cd = new ColorDialog(frame, primaryColor.getBackground());
 
         turquoise.addActionListener(this);
         emerald.addActionListener(this);
@@ -190,7 +203,7 @@ public class ColorChooser1 extends JPanel implements ActionListener {
         fill = new JRadioButton("Fill");
         fill.setSelected(false);
 
-//		cd = new ColorDialog(frame, primaryColor.getBackground());
+        cd = new ColorDialog(frame, primaryColor.getBackground());
         //panel.setBackground( new Color(44, 62, 80));
         panel.add(turquoise);
         panel.add(emerald);
@@ -237,22 +250,22 @@ public class ColorChooser1 extends JPanel implements ActionListener {
 
             if (b == custom2) {
                 Color switchs = custom2.getBackground();
-                if (option.getSelectedItem() == PRIMARY_COLOR) {
+                if (option.getSelectedItem() == PRIMARY_COLOR){
 
                     custom2.setBackground(primaryColor.getBackground());
                     primaryColor.setBackground(switchs);
-                } else {
+                }else{
                     custom2.setBackground(secondaryColor.getBackground());
                     secondaryColor.setBackground(switchs);
                 }
 
             } else if (b == custom3) {
-                if (option.getSelectedItem() == PRIMARY_COLOR) {
+                if (option.getSelectedItem() == PRIMARY_COLOR){
                     Color oldCustom1 = primaryColor.getBackground();
                     primaryColor.setBackground(custom3.getBackground());
                     custom3.setBackground(custom2.getBackground());
                     custom2.setBackground(oldCustom1);
-                } else {
+                }else {
                     Color oldCustom1 = secondaryColor.getBackground();
                     secondaryColor.setBackground(custom3.getBackground());
                     custom3.setBackground(custom2.getBackground());
@@ -265,25 +278,27 @@ public class ColorChooser1 extends JPanel implements ActionListener {
                 frame.getInkPanel().setFillColor(secondaryColor.getBackground());
             } else if (b == newColor) {
                 int i;
-//				if (option.getSelectedItem() == PRIMARY_COLOR) {
-//					i = cd.showCustomDialog(frame, primaryColor.getBackground());
-//				} else {
-//					i = cd.showCustomDialog(frame, secondaryColor.getBackground());
-//				}
-//
-//				if (i == ColorDialog.APPLY_OPTION) {
-//					if (option.getSelectedItem() == PRIMARY_COLOR) {
-//						custom3.setBackground(custom2.getBackground());
-//						custom2.setBackground(primaryColor.getBackground());
-//						primaryColor.setBackground(cd.currentColor);
-//					} else {
-//						custom3.setBackground(custom2.getBackground());
-//						custom2.setBackground(secondaryColor.getBackground());
-//						secondaryColor.setBackground(cd.currentColor);
-//					}
-//					System.out.println(cd.currentColor.getRed() + " " + cd.currentColor.getGreen()+ " " + cd.currentColor.getBlue());
-//				}
-            } else {
+                if (option.getSelectedItem() == PRIMARY_COLOR) {
+                    i = cd.showCustomDialog(frame, primaryColor.getBackground());
+                } else {
+                    i = cd.showCustomDialog(frame, secondaryColor.getBackground());
+                }
+
+                if (i == ColorDialog.APPLY_OPTION) {
+                    if (option.getSelectedItem() == PRIMARY_COLOR) {
+                        custom3.setBackground(custom2.getBackground());
+                        custom2.setBackground(primaryColor.getBackground());
+                        primaryColor.setBackground(cd.currentColor);
+                    } else {
+                        custom3.setBackground(custom2.getBackground());
+                        custom2.setBackground(secondaryColor.getBackground());
+                        secondaryColor.setBackground(cd.currentColor);
+                    }
+                    System.out.println(cd.currentColor.getRed() + " " + cd.currentColor.getGreen()+ " " + cd.currentColor.getBlue());
+                }
+            }
+
+            else {
                 if (option.getSelectedItem() == PRIMARY_COLOR) {
                     custom3.setBackground(custom2.getBackground());
                     custom2.setBackground(primaryColor.getBackground());
