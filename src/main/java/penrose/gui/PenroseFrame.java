@@ -15,8 +15,8 @@ public class PenroseFrame extends JFrame {
 
     // the following avoids a "warning" with Java 1.5.0 complier
     static final long serialVersionUID = 42L;
-    private static final int DEFAULT_LINE_STEP = 5;
-    private static final int DEFAULT_TIME_STEP = 20;
+    public static final int DEFAULT_LINE_STEP = 4;
+    public static final int DEFAULT_TIME_STEP = 30;
 
     private final int CONTENT_PANE_WIDTH = 1300;
     private final int CONTENT_PANE_HEIGHT = 700;

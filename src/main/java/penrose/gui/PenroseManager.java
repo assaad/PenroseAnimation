@@ -7,14 +7,12 @@ import penrose.Point;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.Random;
 
 public class PenroseManager {
     private PenroseFrame frame;
-    private int lineStep = 3;
-    private int timeStep = 10;
+    private int lineStep = PenroseFrame.DEFAULT_LINE_STEP;
+    private int timeStep = PenroseFrame.DEFAULT_TIME_STEP;
     private int imgWidth = 1700;
     private int imgHeight = 900;
     private int frameNumber = 0;  // A counter that increases by one in each frame.
@@ -60,12 +58,12 @@ public class PenroseManager {
         return ready;
     }
 
-    public void start(){
+    public void start() {
         this.startTime = System.currentTimeMillis();
         animationTimer.start();
     }
 
-    public void stop(){
+    public void stop() {
         animationTimer.stop();
     }
 
@@ -77,12 +75,18 @@ public class PenroseManager {
             current = next;
             Line l = current.randomWalk(previous, random);
             next = l.to;
-            stroke=l.color;
+            stroke = l.color;
             pixel = current;
         }
         previousPixel = pixel;
         pixel = Point.from(current, next, frameNumber % lineStep, lineStep);
         frame.inkPanel.repaint();
 //        System.out.println(previousPixel.getX()+","+ previousPixel.getY()+ " => "+pixel.getX()+","+ pixel.getY());
+    }
+
+    public void setDelay(int time) {
+        this.timeStep = time;
+        this.lineStep = this.timeStep / 10 + 1;
+        this.animationTimer.setDelay(time);
     }
 }

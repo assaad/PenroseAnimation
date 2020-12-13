@@ -2,6 +2,8 @@ package penrose.gui;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -16,6 +18,7 @@ public class ToolBar implements ActionListener {
 
     private JButton start;
     private JButton stop;
+    private JSlider speed;
 
     private JButton clear;
     private JFileChooser fc;
@@ -55,7 +58,6 @@ public class ToolBar implements ActionListener {
         stop.addActionListener(this);
         clear.addActionListener(this);
 
-
         rectangle.addActionListener(this);
         line.addActionListener(this);
         circle.addActionListener(this);
@@ -91,6 +93,15 @@ public class ToolBar implements ActionListener {
         undo = new JButton("Undo", new ImageIcon(ClassLoader.getSystemResource("icons/Undo-24.png")));
         redo = new JButton("Redo", new ImageIcon(ClassLoader.getSystemResource("icons/Redo-24.png")));
 
+        speed= new JSlider(1, 100, 101-PenroseFrame.DEFAULT_TIME_STEP);
+        speed.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent changeEvent) {
+                int time = 101-speed.getValue();
+                frame.penroseManager.setDelay(time);
+            }
+        });
+
         String[] items = {"Line Width", "1", "2", "3", "4", "5", "6", "7", "8"};
 
         comboBox = new JComboBox(items);
@@ -104,6 +115,7 @@ public class ToolBar implements ActionListener {
         toolBar.addSeparator();
         toolBar.add(start);
         toolBar.add(stop);
+        toolBar.add(speed);
         toolBar.addSeparator();
         toolBar.add(pencil);
         toolBar.add(line);

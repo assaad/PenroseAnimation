@@ -30,9 +30,13 @@ public class Point {
     }
 
     public static Point from(Point current, Point next, int i, int steps) {
-        int x = current.x + (i + 1) * (next.x - current.x) / steps;
-        int y = current.y + (i + 1) * (next.y - current.y) / steps;
-        return new Point(x, y);
+        if (steps == 1) {
+            return next;
+        } else {
+            int x = current.x + (i + 1) * (next.x - current.x) / steps;
+            int y = current.y + (i + 1) * (next.y - current.y) / steps;
+            return new Point(x, y);
+        }
     }
 
     public static long getPos(int x, int y) {
