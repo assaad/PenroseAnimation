@@ -66,7 +66,7 @@ public class ColorChooser1 extends JPanel implements ActionListener {
 
     private PenroseFrame frame;
 
-    private JComboBox<String> option;
+    private JComboBox option;
     private JRadioButton fill;
 
     ColorDialog cd;
@@ -195,7 +195,7 @@ public class ColorChooser1 extends JPanel implements ActionListener {
 
         newColor = new JButton("Edit Color");
 
-        option = new JComboBox<String>();
+        option = new JComboBox();
         option.addItem(PRIMARY_COLOR);
         option.addItem(SECONDARY_COLOR);
         option.setSelectedItem(PRIMARY_COLOR);
