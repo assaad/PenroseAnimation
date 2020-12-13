@@ -16,6 +16,7 @@ public class SVG {
     public ArrayList<Line> lines = new ArrayList<Line>();
     public ArrayList<Polyline> poly = new ArrayList<Polyline>();
     public ArrayList<Arc> arcs = new ArrayList<Arc>();
+    public int unknownShapes =0;
 
 
     public ArrayList<Shape> shapes = new ArrayList<Shape>();

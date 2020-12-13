@@ -67,12 +67,14 @@ public class SVGParser {
                             nextElement = ARC;
                         } else {
                             System.out.println("Can't parse: " + line);
+                            svg.unknownShapes++;
                         }
                     } else {
                         if (nextElement != -1 || (!line.contains("</g>") && !line.contains("</svg>"))) {
                             switch (nextElement) {
                                 case -1: {
                                     System.out.println("Can't parse line:" + line);
+                                    svg.unknownShapes++;
                                     break;
                                 }
                                 case 0: {
@@ -167,6 +169,7 @@ public class SVGParser {
                                     break;
                                 }
                                 default: {
+                                    svg.unknownShapes++;
                                     System.out.println("Can't parse line:" + line);
                                 }
                             }
@@ -184,41 +187,60 @@ public class SVGParser {
         return svg;
     }
 
-    public static void exportCSV(SVG svg, String path) {
+    public static void exportCSV(SVG svg, String path, boolean sorted, boolean header) {
         try {
             PrintWriter pw = new PrintWriter(new FileWriter(path));
-            pw.println("width, height");
-            pw.println(svg.width+","+svg.height);
-            pw.println("");
 
-            pw.println("viewbox x1, viewbox y1, viewbox x2, viewbox y2");
-            pw.println(svg.viewBox.x1+","+svg.viewBox.y1+","+svg.viewBox.x2+","+svg.viewBox.y2);
-            pw.println("");
-
-
-            pw.println(Circle.header);
-            for (int i = 0; i < svg.circles.size(); i++) {
-                pw.println(svg.circles.get(i).toCsv());
+            if (header) {
+                pw.println("width, height");
             }
+            pw.println(svg.width + "," + svg.height);
             pw.println("");
 
-            pw.println(Line.header);
-            for (int i = 0; i < svg.lines.size(); i++) {
-                pw.println(svg.lines.get(i).toCsv());
+            if (header) {
+                pw.println("viewbox x1, viewbox y1, viewbox x2, viewbox y2");
             }
+            pw.println(svg.viewBox.x1 + "," + svg.viewBox.y1 + "," + svg.viewBox.x2 + "," + svg.viewBox.y2);
             pw.println("");
 
-            pw.println(Arc.header);
-            for (int i = 0; i < svg.arcs.size(); i++) {
-                pw.println(svg.arcs.get(i).toCsv());
-            }
-            pw.println("");
+            if (sorted) {
+                if (header) {
+                    pw.println(Circle.header);
+                }
+                for (int i = 0; i < svg.circles.size(); i++) {
+                    pw.println(svg.circles.get(i).toCsv());
+                }
+                pw.println("");
 
-            pw.println(Polyline.header);
-            for (int i = 0; i < svg.poly.size(); i++) {
-                pw.println(svg.poly.get(i).toCsv());
+                if (header) {
+                    pw.println(Line.header);
+                }
+                for (int i = 0; i < svg.lines.size(); i++) {
+                    pw.println(svg.lines.get(i).toCsv());
+                }
+                pw.println("");
+
+                if (header) {
+                    pw.println(Arc.header);
+                }
+                for (int i = 0; i < svg.arcs.size(); i++) {
+                    pw.println(svg.arcs.get(i).toCsv());
+                }
+                pw.println("");
+
+                if (header) {
+                    pw.println(Polyline.header);
+                }
+                for (int i = 0; i < svg.poly.size(); i++) {
+                    pw.println(svg.poly.get(i).toCsv());
+                }
+                pw.println("");
+            } else {
+                for (int i = 0; i < svg.shapes.size(); i++) {
+                    pw.println(svg.shapes.get(i).toCsv());
+                }
             }
-            pw.println("");
+
 
             pw.close();
 

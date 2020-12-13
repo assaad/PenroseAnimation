@@ -1,9 +1,9 @@
 package penrose.parser;
 
 
-public class SVGconverter {
+import javax.swing.*;
 
-
+public class SVGconverter{
     public static void main(String[] args) {
         try {
             //Parse svg
@@ -17,8 +17,10 @@ public class SVGconverter {
             svgPathOutput = "/home/assaad/Downloads/tileOutput-copy.svg";
             SVGParser.export(svg,svgPathOutput, false);
 
-            svgPathOutput = "/home/assaad/Downloads/tile-csv.csv";
-            SVGParser.exportCSV(svg,svgPathOutput);
+            svgPathOutput = "/home/assaad/Downloads/csv-nonsorted.csv";
+            SVGParser.exportCSV(svg,svgPathOutput,false,false);
+            svgPathOutput = "/home/assaad/Downloads/csv-sorted.csv";
+            SVGParser.exportCSV(svg,svgPathOutput,true,false);
 
         } catch (Exception ex) {
             ex.printStackTrace();

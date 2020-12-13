@@ -14,30 +14,80 @@
     </properties>
 
 
-    <build>
-        <plugins>
-            <plugin>
-                <artifactId>maven-assembly-plugin</artifactId>
-                <configuration>
-                    <archive>
-                        <manifest>
-                            <mainClass>penrose.gui.DrawGui</mainClass>
-                        </manifest>
-                    </archive>
-                    <descriptorRefs>
-                        <descriptorRef>jar-with-dependencies</descriptorRef>
-                    </descriptorRefs>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>make-assembly</id> <!-- this is used for inheritance merges -->
-                        <phase>package</phase> <!-- bind to the packaging phase -->
-                        <goals>
-                            <goal>single</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
-    </build>
+   <build>
+       <plugins>
+           <plugin>
+               <groupId>org.codehaus.mojo</groupId>
+               <artifactId>ideauidesigner-maven-plugin</artifactId>
+               <version>1.0-beta-1</version>
+               <executions>
+                   <execution>
+                       <goals>
+                           <goal>javac2</goal>
+                       </goals>
+                   </execution>
+               </executions>
+
+               <configuration>
+                   <fork>true</fork>
+                   <debug>true</debug>
+                   <failOnError>true</failOnError>
+               </configuration>
+           </plugin>
+
+
+           <plugin>
+               <groupId>org.apache.maven.plugins</groupId>
+               <artifactId>maven-jar-plugin</artifactId>
+               <configuration>
+                   <archive>
+                       <manifest>
+                           <addClasspath>true</addClasspath>
+                           <classpathPrefix>lib/</classpathPrefix>
+                           <mainClass>penrose.parser.SVGForm</mainClass>
+                       </manifest>
+                   </archive>
+               </configuration>
+           </plugin>
+
+           <plugin>
+               <groupId>org.apache.maven.plugins</groupId>
+               <artifactId>maven-shade-plugin</artifactId>
+               <version>3.2.4</version>
+               <executions>
+                   <execution>
+                       <id>build-first</id>
+                       <phase>package</phase>
+                       <goals>
+                           <goal>shade</goal>
+                       </goals>
+                       <configuration>
+                           <transformers>
+                               <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                                   <mainClass>penrose.gui.DrawGui</mainClass>
+                               </transformer>
+                           </transformers>
+                           <finalName>penrose-animation</finalName>
+                       </configuration>
+                   </execution>
+                   <execution>
+                       <id>build-second</id>
+                       <phase>package</phase>
+                       <goals>
+                           <goal>shade</goal>
+                       </goals>
+                       <configuration>
+                           <transformers>
+                               <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                                   <mainClass>penrose.parser.SVGForm</mainClass>
+                               </transformer>
+                           </transformers>
+                           <finalName>SvgConverter</finalName>
+                       </configuration>
+                   </execution>
+               </executions>
+           </plugin>
+       </plugins>
+   </build>
+
 </project>
