@@ -62,7 +62,8 @@ public class AnimationStarter extends JPanel {
 
 //            String csv = "/media/assaad/Published/code/penroseAnimtion/tiles-conv.csv";
 //            panel.graph = penrose.Graph.parseCsv(csv, IMG_WIDTH, IMG_HEIGHT);
-            panel.graph = Converter.convert(chooser.getSelectedFile().getAbsolutePath(), IMG_WIDTH, IMG_HEIGHT);
+            int distance = 30;
+            panel.graph = Converter.convert(chooser.getSelectedFile().getAbsolutePath(), IMG_WIDTH, IMG_HEIGHT, distance);
             long seed = System.currentTimeMillis();
             System.out.println("Seed: "+seed);
             panel.random = new Random(seed);

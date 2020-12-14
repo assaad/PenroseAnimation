@@ -7,7 +7,7 @@ import java.util.Random;
 public class Animation {
     public static void main(String[] args) {
         String csv = "/media/assaad/Published/code/penroseAnimtion/tiles-conv.csv";
-        Graph graph = Graph.parseCsv(csv, 800, 600);
+        Graph graph = Graph.parseCsv(csv, 800, 600, 30);
         Random random = new Random(1234);
 
         Point current = graph.getRandomStart(random);

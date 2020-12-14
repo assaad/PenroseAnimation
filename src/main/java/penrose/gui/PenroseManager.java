@@ -39,8 +39,8 @@ public class PenroseManager {
     }
 
 
-    public void setGraph(String path) {
-        graph = Converter.convert(path, imgWidth, imgHeight);
+    public void setGraph(String path, int distance) {
+        graph = Converter.convert(path, imgWidth, imgHeight, distance);
         long seed = System.currentTimeMillis();
         System.out.println("Seed: " + seed);
         random = new Random(seed);

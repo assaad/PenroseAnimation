@@ -24,7 +24,7 @@ public class Graph {
         this.yMax = 0;
     }
 
-    public static Graph parseCsv(String path, int width, int height) {
+    public static Graph parseCsv(String path, int width, int height, int distance) {
         Graph graph = new Graph();
         BufferedReader br = null;
         String line = "";
@@ -61,7 +61,7 @@ public class Graph {
                     int y1 = (int) (Double.parseDouble(positions[1]) * bestHeight);
                     int x2 = (int) (Double.parseDouble(positions[2]) * bestWidth);
                     int y2 = (int) (Double.parseDouble(positions[3]) * bestHeight);
-                    graph.connect(x1, y1, x2, y2, Color.decode(positions[4]));
+                    graph.connect(x1, y1, x2, y2, Color.decode(positions[4]), distance);
                 }
             }
         } catch (Exception e) {
@@ -84,7 +84,7 @@ public class Graph {
     }
 
 
-    public static Graph parseArray(ArrayList<double[]> values, ArrayList<String> strokes, double ratio, int width, int height) {
+    public static Graph parseArray(ArrayList<double[]> values, ArrayList<String> strokes, double ratio, int width, int height, int distance) {
         Graph graph = new Graph();
 
         double bestWidth;
@@ -105,7 +105,7 @@ public class Graph {
             int y1 = (int) (positions[1] * bestHeight);
             int x2 = (int) (positions[2] * bestWidth);
             int y2 = (int) (positions[3] * bestHeight);
-            graph.connect(x1, y1, x2, y2, Color.decode(strokes.get(i)));
+            graph.connect(x1, y1, x2, y2, Color.decode(strokes.get(i)), distance);
         }
 //        for (Map.Entry<Integer, Integer> e : graph.counters.entrySet()) {
 //            System.out.println("Dist, " + e.getKey() + "," + e.getValue());
@@ -114,12 +114,12 @@ public class Graph {
     }
 
 
-    public void connect(int x1, int y1, int x2, int y2, Color c) {
+    public void connect(int x1, int y1, int x2, int y2, Color c, int distance) {
         long l1 = Point.getPos(x1, y1);
         long l2 = Point.getPos(x2, y2);
 
-        Point p1 = getPoint(x1, y1);
-        Point p2 = getPoint(x2, y2);
+        Point p1 = getPoint(x1, y1, distance);
+        Point p2 = getPoint(x2, y2, distance);
         if (p1 == null) {
             p1 = new Point(x1, y1);
             points.put(l1, p1);
@@ -148,7 +148,7 @@ public class Graph {
         }
     }
 
-    public Point getPoint(int x, int y) {
+    public Point getPoint(int x, int y, int distance) {
         int dist = Integer.MAX_VALUE;
         Point pFinal = null;
 
@@ -168,7 +168,7 @@ public class Graph {
             counters.put(dist, 1 + c);
         }
 
-        if (dist < 30) {
+        if (dist < distance) {
             return pFinal;
         } else {
             return null;

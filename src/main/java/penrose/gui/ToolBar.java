@@ -13,11 +13,14 @@ import java.io.File;
 import java.io.IOException;
 
 public class ToolBar implements ActionListener {
+    private JLabel lblTolerance;
+    private JSlider tolerance;
     private JButton open;
     private JButton save;
 
     private JButton start;
     private JButton stop;
+    private JLabel lblSpeed;
     private JSlider speed;
 
     private JButton clear;
@@ -93,30 +96,56 @@ public class ToolBar implements ActionListener {
         undo = new JButton("Undo", new ImageIcon(ClassLoader.getSystemResource("icons/Undo-24.png")));
         redo = new JButton("Redo", new ImageIcon(ClassLoader.getSystemResource("icons/Redo-24.png")));
 
-        speed= new JSlider(1, 100, 101-PenroseFrame.DEFAULT_TIME_STEP);
+        speed = new JSlider(1, 100, 101 - PenroseFrame.DEFAULT_TIME_STEP);
         speed.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent changeEvent) {
-                int time = 101-speed.getValue();
+                int time = 101 - speed.getValue();
+                lblSpeed.setText("Speed: " + speed.getValue() + " %");
                 frame.penroseManager.setDelay(time);
             }
         });
 
+        tolerance = new JSlider(1, 200, 30);
+        tolerance.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent changeEvent) {
+                lblTolerance.setText("Tolerance: " + tolerance.getValue());
+            }
+        });
+
+        lblTolerance = new JLabel("Tolerance: " + tolerance.getValue());
+        lblSpeed = new JLabel("Speed: " + speed.getValue() + " %");
+
         String[] items = {"Line Width", "1", "2", "3", "4", "5", "6", "7", "8"};
+
+        //open.setPreferredSize(new Dimension(300,50));
 
         comboBox = new JComboBox(items);
         comboBox.setMaximumSize(new Dimension(100, 25));
         // ----------------
         // add buttons to the tool bar
         // ----------------
+        toolBar.add(lblTolerance);
+        toolBar.add(tolerance);
+        toolBar.addSeparator();
+        toolBar.addSeparator();
+
         toolBar.add(open);
         toolBar.add(clear);
         toolBar.add(save);
+
+        toolBar.addSeparator();
+        toolBar.addSeparator();
         toolBar.addSeparator();
         toolBar.add(start);
         toolBar.add(stop);
+
+        toolBar.add(lblSpeed);
         toolBar.add(speed);
         toolBar.addSeparator();
+        toolBar.addSeparator();
+
         toolBar.add(pencil);
         toolBar.add(line);
         toolBar.add(rectangle);
@@ -127,6 +156,7 @@ public class ToolBar implements ActionListener {
         toolBar.addSeparator();
         toolBar.add(undo);
         toolBar.add(redo);
+        toolBar.setPreferredSize(new Dimension(200,800));
     }
 
     public void actionPerformed(ActionEvent ae) {
@@ -293,7 +323,7 @@ public class ToolBar implements ActionListener {
 
         //	Image image = Toolkit.getDefaultToolkit().getImage(f.getPath());
         try {
-            frame.penroseManager.setGraph(f.getAbsolutePath());
+            frame.penroseManager.setGraph(f.getAbsolutePath(), tolerance.getValue());
         } catch (Exception e) {
             e.printStackTrace();
         }

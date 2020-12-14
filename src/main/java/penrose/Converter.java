@@ -7,7 +7,7 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 
 public class Converter {
-    public static Graph convert(String svg, int width, int height){
+    public static Graph convert(String svg, int width, int height, int distance){
         int counter =0;
         BufferedReader br = null;
         String line = "";
@@ -103,7 +103,7 @@ public class Converter {
         }
 
 
-        return Graph.parseArray(res,strokes,ratio,width,height);
+        return Graph.parseArray(res,strokes,ratio,width,height, distance);
     }
 
 
