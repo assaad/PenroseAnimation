@@ -26,6 +26,7 @@ public class PenroseFrame extends JFrame {
     public PaintPanel inkPanel;
     private JMenuBar menuBar;
     private JToolBar toolBar;
+
     private JToolBar cc1;
     private CoordinateBar coordinateBar;
     private JScrollPane sp;

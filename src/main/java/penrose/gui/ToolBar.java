@@ -40,6 +40,7 @@ public class ToolBar implements ActionListener {
     private JButton fill;
     private JButton undo;
     private JButton redo;
+    private JCheckBox chkSave;
 
     private JComboBox comboBox;
 
@@ -96,6 +97,14 @@ public class ToolBar implements ActionListener {
         undo = new JButton("Undo", new ImageIcon(ClassLoader.getSystemResource("icons/Undo-24.png")));
         redo = new JButton("Redo", new ImageIcon(ClassLoader.getSystemResource("icons/Redo-24.png")));
 
+        chkSave = new JCheckBox("Save animation");
+        chkSave.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                frame.penroseManager.saveAnimation = chkSave.isSelected();
+            }
+        });
+
         speed = new JSlider(1, 100, 101 - PenroseFrame.DEFAULT_TIME_STEP);
         speed.addChangeListener(new ChangeListener() {
             @Override
@@ -134,8 +143,8 @@ public class ToolBar implements ActionListener {
         toolBar.add(open);
         toolBar.add(clear);
         toolBar.add(save);
+        toolBar.add(chkSave);
 
-        toolBar.addSeparator();
         toolBar.addSeparator();
         toolBar.addSeparator();
         toolBar.add(start);
@@ -156,7 +165,7 @@ public class ToolBar implements ActionListener {
         toolBar.addSeparator();
         toolBar.add(undo);
         toolBar.add(redo);
-        toolBar.setPreferredSize(new Dimension(200,800));
+        toolBar.setPreferredSize(new Dimension(200, 800));
     }
 
     public void actionPerformed(ActionEvent ae) {

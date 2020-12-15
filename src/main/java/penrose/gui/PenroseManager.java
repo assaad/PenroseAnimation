@@ -15,6 +15,11 @@ public class PenroseManager {
     private int timeStep = PenroseFrame.DEFAULT_TIME_STEP;
     private int imgWidth = 1700;
     private int imgHeight = 900;
+
+    public int getFrameNumber() {
+        return frameNumber;
+    }
+
     private int frameNumber = 0;  // A counter that increases by one in each frame.
     private long startTime;
     private long elapsedTimeMillis;  // The time, in milliseconds, since the animation started.
@@ -23,6 +28,7 @@ public class PenroseManager {
     private Point previous;
     private Point current;
     private Point next;
+    public boolean saveAnimation = false;
 
     public Point previousPixel;
     public Point pixel;
