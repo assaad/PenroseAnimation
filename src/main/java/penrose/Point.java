@@ -51,18 +51,22 @@ public class Point {
         return y;
     }
 
-    public Line randomWalk(Point from, Random random) {
+    public Line randomWalk(Point from, Random random, boolean randomWalk) {
         ArrayList<Line> temp = new ArrayList<Line>();
         Line self = null;
         for (int i = 0; i < connectedTo.size(); i++) {
             if (connectedTo.get(i).to != from) {
                 temp.add(connectedTo.get(i));
-            } else {
+            }else {
                 self = connectedTo.get(i);
             }
         }
         if (temp.size() == 0) {
-            return self;
+            if(randomWalk){
+                return null;
+            }else {
+                return self;
+            }
         } else {
             return temp.get(random.nextInt(temp.size()));
         }

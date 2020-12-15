@@ -11,12 +11,17 @@ public class SVG {
     public String viewBoxString;
     public String transform;
 
+    public double minX = Double.MAX_VALUE;
+    public double minY = Double.MAX_VALUE;
+    public double maxX = -Double.MAX_VALUE;
+    public double maxY = -Double.MAX_VALUE;
+
 
     public ArrayList<Circle> circles = new ArrayList<Circle>();
     public ArrayList<Line> lines = new ArrayList<Line>();
     public ArrayList<Polyline> poly = new ArrayList<Polyline>();
     public ArrayList<Arc> arcs = new ArrayList<Arc>();
-    public int unknownShapes =0;
+    public int unknownShapes = 0;
 
 
     public ArrayList<Shape> shapes = new ArrayList<Shape>();
@@ -26,7 +31,36 @@ public class SVG {
         if (shape instanceof Circle) {
             circles.add((Circle) shape);
         } else if (shape instanceof Line) {
-            lines.add((Line) shape);
+            Line l = (Line) shape;
+            if(l.x1<minX){
+                minX=l.x1;
+            }
+            if(l.x2<minX){
+                minX=l.x2;
+            }
+
+            if(l.x1>maxX){
+                maxX=l.x1;
+            }
+            if(l.x2>maxX){
+                maxX=l.x2;
+            }
+
+            if(l.y1<minY){
+                minY=l.y1;
+            }
+            if(l.y2<minY){
+                minY=l.y2;
+            }
+
+            if(l.y1>maxY){
+                maxY=l.y1;
+            }
+            if(l.y2>maxY){
+                maxY=l.y2;
+            }
+
+            lines.add(l);
         } else if (shape instanceof Arc) {
             arcs.add((Arc) shape);
         } else if (shape instanceof Polyline) {

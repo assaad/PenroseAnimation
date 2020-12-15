@@ -8,7 +8,7 @@ public class Circle extends Shape {
 
     @Override
     public String toCsv() {
-        return "Circle," + this.cx + "," + this.cy + "," + this.r + "," + this.stroke+ "," + this.srokeWidth;
+        return "Circle," + this.cx + "," + this.cy + "," + this.r + "," + this.stroke+ "," + this.strokeWidth;
     }
 
     @Override

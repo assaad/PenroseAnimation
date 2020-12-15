@@ -15,8 +15,16 @@ public class Animation {
         Point next;
         int steps = 10;
         for (int i = 0; i < steps; i++) {
-            Line l = current.randomWalk(previous, random);
-            next = l.to;
+            Line l = current.randomWalk(previous, random, false);
+            if(l!=null){
+                next = l.to;
+            }else {
+                current = graph.getRandomStart(random);
+                previous = current;
+                next = current;
+            }
+
+
             System.out.println("Moving from p1: " + current.print() + " to " + next.print());
             previous = current;
             current = next;

@@ -46,7 +46,7 @@ public class PenroseManager {
         random = new Random(seed);
         current = graph.getRandomStart(random);
         previous = current;
-        Line l = current.randomWalk(previous, random);
+        Line l = current.randomWalk(previous, random, false);
         next = l.to;
         stroke = l.color;
         previousPixel = current;
@@ -73,14 +73,24 @@ public class PenroseManager {
         if (frameNumber % lineStep == 0) {
             previous = current;
             current = next;
-            Line l = current.randomWalk(previous, random);
-            next = l.to;
-            stroke = l.color;
-            pixel = current;
+            Line l = current.randomWalk(previous, random, false);
+            if (l == null) {
+                current = graph.getRandomStart(random);
+                next = current;
+                previous = current;
+                pixel = Point.from(current, next, frameNumber % lineStep, lineStep);
+            } else {
+                next = l.to;
+                stroke = l.color;
+                pixel = current;
+            }
+
         }
         previousPixel = pixel;
         pixel = Point.from(current, next, frameNumber % lineStep, lineStep);
         frame.inkPanel.repaint();
+
+
 //        System.out.println(previousPixel.getX()+","+ previousPixel.getY()+ " => "+pixel.getX()+","+ pixel.getY());
     }
 

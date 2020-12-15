@@ -105,6 +105,9 @@ public class Graph {
             int y1 = (int) (positions[1] * bestHeight);
             int x2 = (int) (positions[2] * bestWidth);
             int y2 = (int) (positions[3] * bestHeight);
+            if(strokes.get(i).equals("lime")){
+                strokes.set(i,"#00FF00");
+            }
             graph.connect(x1, y1, x2, y2, Color.decode(strokes.get(i)), distance);
         }
 //        for (Map.Entry<Integer, Integer> e : graph.counters.entrySet()) {

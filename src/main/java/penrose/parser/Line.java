@@ -7,6 +7,14 @@ public class Line extends Shape {
     public double x2;
     public double y2;
 
+    public Line(Point p1, Point p2) {
+        this.x1 = p1.x;
+        this.y1 = p1.y;
+
+        this.x2 = p2.x;
+        this.y2 = p2.y;
+    }
+
 
     public Line() {
 
@@ -21,7 +29,7 @@ public class Line extends Shape {
 
     @Override
     public String toCsv() {
-        return "Line," + this.x1 + "," + this.y1 + "," + this.x2+ "," + this.y2 + "," + this.stroke+ "," + this.srokeWidth;
+        return "Line," + this.x1 + "," + this.y1 + "," + this.x2 + "," + this.y2 + "," + this.stroke + "," + this.strokeWidth;
     }
 
     @Override

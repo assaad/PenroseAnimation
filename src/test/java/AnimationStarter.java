@@ -55,7 +55,7 @@ public class AnimationStarter extends JPanel {
                 "SVG", "svg");
         chooser.setFileFilter(filter);
         int returnVal = chooser.showOpenDialog(null);
-        if(returnVal == JFileChooser.APPROVE_OPTION) {
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
 //            System.out.println("You chose to open this file: " +
 //                    chooser.getSelectedFile().getName());
 
@@ -65,13 +65,13 @@ public class AnimationStarter extends JPanel {
             int distance = 30;
             panel.graph = Converter.convert(chooser.getSelectedFile().getAbsolutePath(), IMG_WIDTH, IMG_HEIGHT, distance);
             long seed = System.currentTimeMillis();
-            System.out.println("Seed: "+seed);
+            System.out.println("Seed: " + seed);
             panel.random = new Random(seed);
             panel.current = panel.graph.getRandomStart(panel.random);
             panel.previous = panel.current;
-            Line l = panel.current.randomWalk(panel.previous, panel.random);
+            Line l = panel.current.randomWalk(panel.previous, panel.random, false);
             panel.next = l.to;
-            panel.stroke=l.color;
+            panel.stroke = l.color;
             panel.previousPixel = panel.current;
             panel.pixel = panel.current;
             panel.image = new BufferedImage(IMG_WIDTH, IMG_HEIGHT, BufferedImage.TYPE_INT_ARGB);
@@ -88,10 +88,17 @@ public class AnimationStarter extends JPanel {
                     if (panel.frameNumber % STEPS == 0) {
                         panel.previous = panel.current;
                         panel.current = panel.next;
-                        Line l = panel.current.randomWalk(panel.previous, panel.random);
-                        panel.next = l.to;
-                        panel.stroke=l.color;
-                        panel.pixel = panel.current;
+                        Line l = panel.current.randomWalk(panel.previous, panel.random, false);
+                        if (l != null) {
+                            panel.next = l.to;
+                            panel.stroke = l.color;
+                            panel.pixel = panel.current;
+                        } else {
+                            panel.current = panel.graph.getRandomStart(panel.random);
+                            panel.next = panel.current;
+                            panel.previous = panel.current;
+                        }
+
                     }
                     panel.previousPixel = panel.pixel;
                     panel.pixel = Point.from(panel.current, panel.next, panel.frameNumber % STEPS, STEPS);
@@ -101,7 +108,7 @@ public class AnimationStarter extends JPanel {
             });
             window.setVisible(true); // Open the window, making it visible on the screen.
             animationTimer.start();  // Start the animation running.
-        }else{
+        } else {
             System.exit(0);
         }
     }

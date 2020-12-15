@@ -8,7 +8,7 @@ public class Arc extends Shape{
 
     @Override
     public String toCsv() {
-        return "Arc," + this.start.x + "," + this.start.y + "," + this.pos[0] + "," + this.pos[1] + "," + (int)(this.pos[2]) + "," + (int)(this.pos[3]) + "," + (int)(this.pos[4]) + "," + this.pos[5] + "," + this.pos[6] + "," + this.stroke+ "," + this.srokeWidth;
+        return "Arc," + this.start.x + "," + this.start.y + "," + this.pos[0] + "," + this.pos[1] + "," + (int)(this.pos[2]) + "," + (int)(this.pos[3]) + "," + (int)(this.pos[4]) + "," + this.pos[5] + "," + this.pos[6] + "," + this.stroke+ "," + this.strokeWidth;
     }
 
     @Override
